@@ -4,11 +4,17 @@ import com.example.eum_api.request.*;
 import com.example.eum_api.response.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class EumApiService {
@@ -24,7 +30,7 @@ public class EumApiService {
         SearchAreaRequest areaRequest = new SearchAreaRequest();
         areaRequest.setId(id);
         areaRequest.setKey(key);
-        String url = "?id="+ areaRequest.getId()+"& key="+areaRequest.getKey();
+        String url = "?id="+ areaRequest.getId()+"&key="+areaRequest.getKey();
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -32,6 +38,23 @@ public class EumApiService {
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        Document document = documentBuilder.parse(response.body());
+        document.getDocumentElement().normalize();
+
+        NodeList nodeList = document.getElementsByTagName("response");
+
+        SearchAreaResponse searchAreaResponse = new SearchAreaResponse();
+        List<Area>  areas = new ArrayList<>();
+        for(int i =0 ; i< nodeList.getLength() ; i++){
+            Area area = new Area();
+            // area.setAreaNm();
+            // area.setAreaCd();
+            areas.add(area);
+        }
 
         System.out.println(response.body());
 
