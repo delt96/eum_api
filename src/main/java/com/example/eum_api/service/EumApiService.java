@@ -20,13 +20,13 @@ import java.util.List;
 public class EumApiService {
 
     @Value("${api.key}")
-    String key ;
+    String key;
     @Value("${api.id}")
-    String id ;
+    String id;
 
 
     //시군구 코드 조회
-    public SearchAreaResponse searchArea() throws Exception{
+    public String searchArea() throws Exception{
         SearchAreaRequest areaRequest = new SearchAreaRequest();
         areaRequest.setId(id);
         areaRequest.setKey(key);
@@ -39,29 +39,10 @@ public class EumApiService {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        Document document = documentBuilder.parse(response.body());
-        document.getDocumentElement().normalize();
-
-        NodeList nodeList = document.getElementsByTagName("response");
-
-        SearchAreaResponse searchAreaResponse = new SearchAreaResponse();
-        List<Area>  areas = new ArrayList<>();
-        for(int i =0 ; i< nodeList.getLength() ; i++){
-            Area area = new Area();
-            // area.setAreaNm();
-            // area.setAreaCd();
-            areas.add(area);
-        }
-
-        System.out.println(response.body());
-
-        return null;
+        return response.body();
     }
     //지역지구 코드 조회
-    public SearchZoneResponse searchZone (String uname, String areaCd) throws Exception{
+    public String searchZone (String uname, String areaCd) throws Exception{
         SearchZoneRequest searchZoneRequest =new SearchZoneRequest();
         searchZoneRequest.setId(id);
         searchZoneRequest.setKey(key);
@@ -77,12 +58,10 @@ public class EumApiService {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println(response.body());
-
-        return null;
+        return response.body();
     }
     //토지이용규제 법령정보
-    public LuLawInfoResponse luLawInfo(String areaCd , String ucodeList) throws Exception{
+    public String luLawInfo(String areaCd , String ucodeList) throws Exception{
         LuLawInfoRequest luLawInfoRequest = new LuLawInfoRequest();
         luLawInfoRequest.setId(id);
         luLawInfoRequest.setKey(key);
@@ -98,12 +77,10 @@ public class EumApiService {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println(response.body());
-
-        return null;
+        return response.body();
     }
     //토지이용 행위 명
-    public SearchLunCdResponse searchLunCd (String pageNo , String landUseNm)  throws  Exception{
+    public String searchLunCd (String pageNo , String landUseNm)  throws  Exception{
         SearchLunCdRequest searchLunCdRequest =new SearchLunCdRequest();
         searchLunCdRequest.setId(id);
         searchLunCdRequest.setKey(key);
@@ -119,14 +96,11 @@ public class EumApiService {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println(response.body());
-
-
-        return null;
+        return response.body();
     }
 
     //토지이용 규제 행위제한 정보
-    public ArLandUseInfoResponse arLandUseInfo (String ucodeList, String landUseNm) throws  Exception{
+    public String arLandUseInfo (String ucodeList, String landUseNm) throws  Exception{
         ArLandUseInfoRequest arLandUseInfoRequest = new ArLandUseInfoRequest();
         arLandUseInfoRequest.setId(id);
         arLandUseInfoRequest.setKey(key);
@@ -142,10 +116,7 @@ public class EumApiService {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println(response.body());
-
-
-        return null;
+        return response.body();
     }
 }
 

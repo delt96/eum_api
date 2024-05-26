@@ -14,7 +14,8 @@ public class EumApiController {
     EumApiService eumApiService;
 
     @GetMapping("/searchArea")
-    public SearchAreaResponse searchArea(){
+    public String searchArea(){
+        System.out.println("searchArea Start");
         try {
             return eumApiService.searchArea();
         }catch (Exception e){
@@ -23,7 +24,8 @@ public class EumApiController {
         }
     }
     @GetMapping("/searchZone")
-    public SearchZoneResponse searchZone(String uname, String areaCd){
+    public String searchZone(String uname, String areaCd){
+        System.out.println("searchZone Start");
         try {
             return eumApiService.searchZone(uname, areaCd);
         }catch (Exception e){
@@ -32,7 +34,8 @@ public class EumApiController {
         }
     }
     @GetMapping("/luLawInfo")
-    public LuLawInfoResponse luLawInfo(String areaCd , String ucodeList){
+    public String luLawInfo(String areaCd , String ucodeList){
+        System.out.println("luLawInfo Start");
         try {
             return eumApiService.luLawInfo(areaCd, ucodeList);
         }catch (Exception e){
@@ -41,7 +44,8 @@ public class EumApiController {
         }
     }
     @GetMapping("/searchLunCd")
-    public SearchLunCdResponse searchLunCd(@RequestParam(defaultValue = "1") String pageNo , String landUseNm){
+    public String searchLunCd(@RequestParam(defaultValue = "1") String pageNo , String landUseNm){
+        System.out.println("searchLunCd Start");
         try {
             return eumApiService.searchLunCd(pageNo, landUseNm);
         }catch (Exception e){
@@ -50,7 +54,8 @@ public class EumApiController {
         }
     }
     @GetMapping("/arLandUseInfo")
-    public ArLandUseInfoResponse arLandUseInfo(String ucodeList, String landUseNm){
+    public String arLandUseInfo(String ucodeList, String landUseNm){
+        System.out.println("arLandUseInfo");
         try {
             return eumApiService.arLandUseInfo(ucodeList, landUseNm);
         }catch (Exception e){
